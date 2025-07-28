@@ -20,7 +20,8 @@ import time
 
 # 导入我们的模块
 try:
-    from config.database_config import db_config, system_config
+    from config.database_config import db_config
+    from config.system_config import system_config
     from data.storage.sqlite_database_manager import sqlite_db_manager, sqlite_data_repository
     print("✅ 模块导入成功")
 except ImportError as e:
