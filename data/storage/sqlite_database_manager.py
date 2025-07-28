@@ -12,7 +12,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime, timedelta
 import json
 
-from config.database_config import db_config, system_config
+from config.database_config import db_config
+from config.system_config import system_config
 from config.sqlite_models import Base
 from utils.logger import get_logger
 from utils.exceptions import DatabaseError, ConnectionError
