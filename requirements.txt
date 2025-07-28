@@ -1,0 +1,29 @@
+# requirements_sqlite.txt - SQLite版本的依赖文件
+# 核心数据处理
+pandas>=1.5.0
+numpy>=1.21.0
+scipy>=1.9.0
+
+# 数据库 (SQLite版本)
+SQLAlchemy>=1.4.0
+# psycopg2-binary>=2.9.0  # PostgreSQL不需要了
+# 可选Redis支持
+redis>=4.3.0
+
+# 金融数据
+tushare>=1.2.89
+
+# 技术指标 (可选，如果安装困难可以跳过)
+# TA-Lib>=0.4.25
+pandas-ta>=0.3.14b0  # TA-Lib的替代品
+
+# 基础工具
+requests>=2.28.0
+python-dotenv>=0.20.0
+colorlog>=6.6.0
+
+# Web框架 (后续需要)
+Flask>=2.2.0
+
+# 测试和开发工具
+pytest>=7.1.0
