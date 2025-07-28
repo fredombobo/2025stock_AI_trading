@@ -409,3 +409,4 @@ class HistoricalDataCollector:
 historical_collector = HistoricalDataCollector()
 
 
+
