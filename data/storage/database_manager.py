@@ -59,9 +59,12 @@ class DatabaseManager:
                 max_connections=redis_config.pool_size,
                 decode_responses=True
             )
-            
-            logger.error(f"检查数据存在性失败: {e}")
-            return False
+
+            logger.info("数据库连接初始化成功")
+
+        except Exception as e:
+            logger.error(f"数据库连接初始化失败: {e}")
+            raise ConnectionError(f"数据库连接失败: {e}")
 
 class CacheManager:
     """缓存管理器"""
@@ -356,14 +359,6 @@ class DataRepository:
         sql += " ORDER BY created_at DESC LIMIT 100"
         
         return self.db_manager.query_to_dataframe(sql, params)
-
-# 全局数据库管理器实例
-db_manager = DatabaseManager()
-data_repository = DataRepository(db_manager).info("数据库连接初始化成功")
-            
-        except Exception as e:
-            logger.error(f"数据库连接初始化失败: {e}")
-            raise ConnectionError(f"数据库连接失败: {e}")
     
     @contextmanager
     def get_session(self) -> Generator[Session, None, None]:
@@ -469,4 +464,11 @@ data_repository = DataRepository(db_manager).info("数据库连接初始化成�
             result = self.execute_sql(sql, {'ts_code': ts_code, 'trade_date': trade_date})
             return len(result) > 0
         except Exception as e:
-            logger
+            logger.error(f"检查数据存在性失败: {e}")
+            return False
+
+
+# 全局数据库管理器实例
+db_manager = DatabaseManager()
+data_repository = DataRepository(db_manager)
+
