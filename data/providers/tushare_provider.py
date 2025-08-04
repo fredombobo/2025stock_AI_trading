@@ -336,6 +336,66 @@ class TushareProvider:
         except Exception as e:
             logger.error(f"获取每日基本面数据失败: {e}")
             raise DataProviderError(f"获取每日基本面数据失败: {e}")
+
+    def get_top_list(self, start_date: Optional[str] = None,
+                     end_date: Optional[str] = None,
+                     trade_date: Optional[str] = None) -> pd.DataFrame:
+        """获取龙虎榜数据"""
+        try:
+            params: Dict[str, Any] = {}
+            if trade_date:
+                params['trade_date'] = trade_date.replace('-', '')
+            if start_date:
+                params['start_date'] = start_date.replace('-', '')
+            if end_date:
+                params['end_date'] = end_date.replace('-', '')
+
+            df = self._make_request('top_list', **params)
+            if not df.empty:
+                df['trade_date'] = pd.to_datetime(df['trade_date'])
+            return df
+        except Exception as e:
+            logger.error(f"获取龙虎榜数据失败: {e}")
+            raise DataProviderError(f"获取龙虎榜数据失败: {e}")
+
+    def get_block_trade(self, ts_code: Optional[str] = None,
+                        start_date: Optional[str] = None,
+                        end_date: Optional[str] = None) -> pd.DataFrame:
+        """获取大宗交易数据"""
+        try:
+            params: Dict[str, Any] = {}
+            if ts_code:
+                params['ts_code'] = ts_code
+            if start_date:
+                params['start_date'] = start_date.replace('-', '')
+            if end_date:
+                params['end_date'] = end_date.replace('-', '')
+
+            df = self._make_request('block_trade', **params)
+            if not df.empty:
+                df['trade_date'] = pd.to_datetime(df['trade_date'])
+            return df
+        except Exception as e:
+            logger.error(f"获取大宗交易数据失败: {e}")
+            raise DataProviderError(f"获取大宗交易数据失败: {e}")
+
+    def get_moneyflow(self, ts_code: str, start_date: Optional[str] = None,
+                      end_date: Optional[str] = None) -> pd.DataFrame:
+        """获取资金流向数据"""
+        try:
+            params: Dict[str, Any] = {'ts_code': ts_code}
+            if start_date:
+                params['start_date'] = start_date.replace('-', '')
+            if end_date:
+                params['end_date'] = end_date.replace('-', '')
+
+            df = self._make_request('moneyflow', **params)
+            if not df.empty:
+                df['trade_date'] = pd.to_datetime(df['trade_date'])
+            return df
+        except Exception as e:
+            logger.error(f"获取资金流向数据失败: {e}")
+            raise DataProviderError(f"获取资金流向数据失败: {e}")
     
     def _validate_price_data(self, df: pd.DataFrame) -> pd.DataFrame:
         """验证价格数据的有效性"""
@@ -454,5 +514,9 @@ class TushareProvider:
             logger.error(f"批量获取日线数据失败: {e}")
             raise DataProviderError(f"批量获取日线数据失败: {e}")
 
-# 全局Tushare提供商实例
-tushare_provider = TushareProvider()
+# 全局Tushare提供商实例（可能因未配置token而为空）
+try:
+    tushare_provider = TushareProvider()
+except Exception as e:
+    tushare_provider = None
+    logger.warning(f"无法初始化TushareProvider: {e}")
