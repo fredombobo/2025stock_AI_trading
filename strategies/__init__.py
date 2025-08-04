@@ -10,9 +10,12 @@ from .base import (
     SignalGenerator,
     Trade,
     BacktestEngine,
-    MACrossoverStrategy,
-    MACDStrategy,
 )
+
+from .master_tracking_strategy import MasterTrackingStrategy
+from .sector_rotation_strategy import SectorRotationStrategy
+from .multi_factor_strategy import MultiFactorStrategy
+from .capital_flow_strategy import CapitalFlowStrategy
 
 __all__ = [
     "SignalType",
@@ -24,6 +27,8 @@ __all__ = [
     "SignalGenerator",
     "Trade",
     "BacktestEngine",
-    "MACrossoverStrategy",
-    "MACDStrategy",
+    "MasterTrackingStrategy",
+    "SectorRotationStrategy",
+    "MultiFactorStrategy",
+    "CapitalFlowStrategy",
 ]
