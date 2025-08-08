@@ -1,2 +1,7 @@
 # Ignore environment configuration
 .env
+
+# Ignore compiled files and logs
+__pycache__/
+*.pyc
+logs/
