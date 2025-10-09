@@ -13,6 +13,7 @@ from .base import (
     MACrossoverStrategy,
     MACDStrategy,
 )
+from .china_limit_up_strategy import ChinaLimitUpConfig, ChinaLimitUpMomentumStrategy
 
 __all__ = [
     "SignalType",
@@ -26,4 +27,6 @@ __all__ = [
     "BacktestEngine",
     "MACrossoverStrategy",
     "MACDStrategy",
+    "ChinaLimitUpConfig",
+    "ChinaLimitUpMomentumStrategy",
 ]
